@@ -11,4 +11,7 @@ public class AnyNdk {
 
     public static native String stringFromJNI();
 
+
+    public static native void native3();
+
 }

@@ -117,8 +117,8 @@ Java_com_dds_anyndk_AnyNdk_stringFromJNI(JNIEnv *env, jclass type) {
 
 
 
-    void (*p)(char *) = callback;
-    test(p);
+//    void (*p)(char *) = callback;
+//    test(p);
 //    test(callback);
 
 
@@ -130,37 +130,38 @@ Java_com_dds_anyndk_AnyNdk_stringFromJNI(JNIEnv *env, jclass type) {
 }
 
 
-void test(Callback callback) {
-    callback("成功");
-    callback("失败");
-}
+//void test(Callback callback) {
+//    callback("成功");
+//    callback("失败");
+//}
 
-void callback(char *msg) {
-    LOGD("%s\n", msg);
-}
+//void callback(char *msg) {
+//    LOGD("%s\n", msg);
+//}
 
 //函数指针
-void println(char *buffer) {
-    LOGD("%s\n", buffer);
-}
+//void println(char *buffer) {
+//    LOGD("%s\n", buffer);
+//}
 
 //接受一个函数作为参数
-void say(void(*p)(char *), char *buffer) {
-    p(buffer);
-}
+//void say(void(*p)(char *), char *buffer) {
+//    p(buffer);
+//}
 
-int addR(int num, ...) {
-    va_list valist;
-    int sum = 0;
-    // 初始化
-    va_start(valist, num);
-    for (size_t i = 0; i < num; i++) {
-        //访问
-        int j = va_arg(valist, int);
-        LOGD("%d\n", j);
-        sum += j;
-    }
-    //清理
-    va_end(valist);
-    return sum;
-}
+//int addR(int num, ...) {
+//    va_list valist;
+//    int sum = 0;
+//    // 初始化
+//    va_start(valist, num);
+//    for (size_t i = 0; i < num; i++) {
+//        //访问
+//        int j = va_arg(valist, int);
+//        LOGD("%d\n", j);
+//        sum += j;
+//    }
+//    //清理
+//    va_end(valist);
+//    return sum;
+//}
+
