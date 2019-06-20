@@ -11,5 +11,11 @@
 
 [【NDK系列4】c++基础1 字符串、c兼容、引用、命名空间](csdn/NDK系列4_c++基础1.md)
 
+[【NDK系列5】c++基础2 c++面向对象](csdn/NDK系列5_c++基础2.md)
 
+### 2. java与c++交互  Jni编程
+
+[【NDK系列11】Java和c++交互 Jni初识](csdn/NDK系列11_Java和c++交互.md)
+
+### 3. 进阶
 

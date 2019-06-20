@@ -30,14 +30,14 @@ Java_com_dds_anyndk_AnyNdk_native4(JNIEnv *env, jclass type) {
 
 
     // 3. c++ string
-    string str1 = "Hello";
-    string str2 = "World";
-    str1.append(",");
-    str1.append(str2);
-    const char *s1 = str1.c_str();
-    LOGD("%s", s1);
-    LOGD("%ld", str1.size());
-    LOGD("%d", str1.empty());
+//    string str1 = "Hello";
+//    string str2 = "World";
+//    str1.append(",");
+//    str1.append(str2);
+//    const char *s1 = str1.c_str();
+//    LOGD("%s", s1);
+//    LOGD("%ld", str1.size());
+//    LOGD("%d", str1.empty());
 
 
 }
@@ -46,5 +46,4 @@ Java_com_dds_anyndk_AnyNdk_native4(JNIEnv *env, jclass type) {
 #ifdef __cplusplus
 }
 #endif
-
 
