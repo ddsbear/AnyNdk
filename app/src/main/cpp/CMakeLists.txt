@@ -6,7 +6,8 @@ add_library(
         native-lib
         SHARED
         native-lib.cpp
-        native3.cpp)
+        native3.cpp
+        native4.cpp)
 
 
 target_link_libraries(

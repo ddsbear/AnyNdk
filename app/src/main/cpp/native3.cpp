@@ -9,7 +9,6 @@ typedef struct {
     char name[50];
     int age;
 } Student;
-
 struct Struct1 {
     short a;
     int b;
@@ -20,7 +19,6 @@ struct Struct2 {
     short c;
     int b;
 };
-
 union Data {
     int i;
     short j;
@@ -53,3 +51,4 @@ Java_com_dds_anyndk_AnyNdk_native3(JNIEnv *env, jclass type) {
 
 
 }
+

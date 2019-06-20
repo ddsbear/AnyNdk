@@ -14,4 +14,5 @@ public class AnyNdk {
 
     public static native void native3();
 
+    public static native void native4();
 }

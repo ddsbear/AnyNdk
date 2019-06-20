@@ -17,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(AnyNdk.stringFromJNI());
 
         // 测试3
-        AnyNdk.native3();
+        //  AnyNdk.native3();
+
+        // 测试4
+        AnyNdk.native4();
     }
 
 
