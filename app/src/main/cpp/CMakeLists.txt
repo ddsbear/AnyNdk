@@ -8,7 +8,8 @@ add_library(
         native-lib.cpp
         native3.cpp
         native4.cpp
-        native11.cpp)
+        native11.cpp
+        native11_dy.cpp)
 
 
 target_link_libraries(

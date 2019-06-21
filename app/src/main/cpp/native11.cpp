@@ -2,45 +2,13 @@
 #include <string>
 #include <android/log.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define  LOG_TAG    "dds_native4"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,  LOG_TAG, __VA_ARGS__ )
 
-
-// 动态注册
-void dynamicNative1(JNIEnv *env, jobject jobj) {
-    LOGD("dynamicNative1 动态注册");
-}
-
-jstring dynamicNative2(JNIEnv *env, jobject jobj, jint i) {
-    return env->NewStringUTF("我是动态注册的dynamicNative2方法");
-}
-
-//需要动态注册的方法数组
-static const JNINativeMethod mMethods[] = {
-        {"dynamicNative", "()V",                   (void *) dynamicNative1},
-        {"dynamicNative", "(I)Ljava/lang/String;", (jstring *) dynamicNative2}
-
-};
-
-//需要动态注册native方法的类名
-static const char* mClassName = "com/dds/anyndk/AnyNdk";
-
-jint JNI_OnLoad(JavaVM* vm, void* reserved){
-    JNIEnv* env = NULL;
-    //获得 JniEnv
-    int r = vm->GetEnv((void**) &env, JNI_VERSION_1_4);
-    if( r != JNI_OK){
-        return -1;
-    }
-    jclass mainActivityCls = env->FindClass( mClassName);
-    // 注册 如果小于0则注册失败
-    r = env->RegisterNatives(mainActivityCls,mMethods,2);
-    if(r  != JNI_OK )
-    {
-        return -1;
-    }
-    return JNI_VERSION_1_4;
-}
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -147,4 +115,6 @@ Java_com_dds_anyndk_AnyNdk_native11_14(JNIEnv *env, jclass type, jobject javaHel
 
 }
 
-
+#ifdef __cplusplus
+}
+#endif

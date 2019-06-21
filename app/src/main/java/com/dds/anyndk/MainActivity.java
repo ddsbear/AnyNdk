@@ -36,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
         // AnyNdk.native11_3();
 
         // c/c++反射修改变量值
-        JavaHelper javaHelper = new JavaHelper();
-        javaHelper.testReflect(javaHelper);
+//        JavaHelper javaHelper = new JavaHelper();
+//        javaHelper.testReflect(javaHelper);
+
+        AnyNdk.dynamicNative();
+        AnyNdk.dynamicNative(12);
 
     }
 

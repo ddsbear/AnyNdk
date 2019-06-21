@@ -312,19 +312,18 @@ static const JNINativeMethod mMethods[] = {
 
 };
 //需要动态注册native方法的类名
-static const char* mClassName = "com/dongnao/jnitest/MainActivity";
-jint JNI_OnLoad(JavaVM* vm, void* reserved){
-    JNIEnv* env = NULL;
+static const char* mClassName = "com/dds/anyndk/AnyNdk";
+jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+    JNIEnv *env = NULL;
     //获得 JniEnv
-    int r = vm->GetEnv((void**) &env, JNI_VERSION_1_4);
-    if( r != JNI_OK){
+    int r = vm->GetEnv((void **) &env, JNI_VERSION_1_4);
+    if (r != JNI_OK) {
         return -1;
     }
-    jclass mainActivityCls = env->FindClass( mClassName);
+    jclass activityCls = env->FindClass(mClassName);
     // 注册 如果小于0则注册失败
-    r = env->RegisterNatives(mainActivityCls,mMethods,2);
-    if(r  != JNI_OK )
-    {
+    r = env->RegisterNatives(activityCls, mMethods, 2);
+    if (r != JNI_OK) {
         return -1;
     }
     return JNI_VERSION_1_4;
