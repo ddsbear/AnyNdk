@@ -19,6 +19,7 @@
 
 [【NDK系列12】编译器 clang gcc g++](csdn/NDK系列12_编译器_clang_gcc.md)
 
+[【NDK系列13】Makefile 详解](csdn/NDK系列13_Makefile.md)
 
 ### 3. 进阶
 
