@@ -336,9 +336,50 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 
 ## 5. c++线程中调用Java
 
+native调用java需要使用JNIEnv这个结构体，而JNIEnv是由Jvm传入与线程相关的变量。
+
+但是可以通过JavaVM的AttachCurrentThread方法来获取到当前线程中的JNIEnv指针。
+
+```c
+JavaVM* _vm = 0;
+jobject  _instance = 0;
+jint JNI_OnLoad(JavaVM* vm, void* reserved){
+    _vm = vm;
+    return JNI_VERSION_1_4;
+}
+
+
+void *task(void *args) {
+    JNIEnv *env;
+    _vm->AttachCurrentThread(&env, 0);
+
+    jclass clazz = env->GetObjectClass(_instance);
+    jmethodID methodId = env->GetStaticMethodID(clazz, "staticMethod", "(Ljava/lang/String;IZ)V");
+    jstring staticStr = env->NewStringUTF("C++调用静态方法");
+    env->CallStaticVoidMethod(clazz, methodId, staticStr, 1, true);
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(staticStr);
+
+    _vm->DetachCurrentThread();
+    return 0;
+
+
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_dds_anyndk_AnyNdk_native11_15(JNIEnv *env, jclass type, jobject javaHelper) {
+    pthread_t pid;
+    _instance = env->NewGlobalRef(javaHelper);
+    // 开启线程
+    pthread_create(&pid, 0, task, 0);
+
+
+}
 
 
 
+```
 
 
 

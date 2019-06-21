@@ -29,6 +29,10 @@ public class AnyNdk {
     public static native void native11_4(JavaHelper javaHelper);
 
 
+    // 线程中调用java
+    public static native void native11_5(JavaHelper javaHelper);
+
+
     public static native void dynamicNative();
 
     public static native String dynamicNative(int i);

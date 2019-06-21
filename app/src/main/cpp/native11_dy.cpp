@@ -1,16 +1,16 @@
 #include <jni.h>
 #include <string>
 #include <android/log.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <pthread.h>
 
 #define  LOG_TAG    "dds_native4"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,  LOG_TAG, __VA_ARGS__ )
 
-// 动态注册
 
+JavaVM *_vm = 0;
+jobject _instance = 0;
+
+// 动态注册
 void dynamicNative1(JNIEnv *env, jobject jobj) {
     LOGD("dynamicNative1 动态注册");
 }
@@ -37,6 +37,7 @@ static const JNINativeMethod mMethods[] = {
 static const char *mClassName = "com/dds/anyndk/AnyNdk";
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+    _vm = vm;
     JNIEnv *env = NULL;
     //获得 JniEnv
     int r = vm->GetEnv((void **) &env, JNI_VERSION_1_4);
@@ -53,6 +54,32 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 }
 
 
-#ifdef __cplusplus
+void *task(void *args) {
+    JNIEnv *env;
+    _vm->AttachCurrentThread(&env, 0);
+
+    jclass clazz = env->GetObjectClass(_instance);
+    jmethodID methodId = env->GetStaticMethodID(clazz, "staticMethod", "(Ljava/lang/String;IZ)V");
+    jstring staticStr = env->NewStringUTF("C++调用静态方法");
+    env->CallStaticVoidMethod(clazz, methodId, staticStr, 1, true);
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(staticStr);
+
+    _vm->DetachCurrentThread();
+    return 0;
+
+
 }
-#endif
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_dds_anyndk_AnyNdk_native11_15(JNIEnv *env, jclass type, jobject javaHelper) {
+    pthread_t pid;
+    _instance = env->NewGlobalRef(javaHelper);
+    pthread_create(&pid, 0, task, 0);
+
+
+}
+
+
+

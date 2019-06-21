@@ -2,12 +2,10 @@
 #include <string>
 #include <android/log.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define  LOG_TAG    "dds_native4"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,  LOG_TAG, __VA_ARGS__ )
+
 
 
 extern "C"
@@ -115,6 +113,3 @@ Java_com_dds_anyndk_AnyNdk_native11_14(JNIEnv *env, jclass type, jobject javaHel
 
 }
 
-#ifdef __cplusplus
-}
-#endif
