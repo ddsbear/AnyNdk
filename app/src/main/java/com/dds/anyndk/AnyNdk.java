@@ -16,6 +16,8 @@ public class AnyNdk {
 
     public static native void native4();
 
+    public static native void native5();
+
 
     public static native String native11(int a, String str, float f);
 
@@ -36,5 +38,9 @@ public class AnyNdk {
     public static native void dynamicNative();
 
     public static native String dynamicNative(int i);
+
+
+
+
 
 }

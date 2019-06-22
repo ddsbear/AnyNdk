@@ -1,8 +1,7 @@
 package com.dds.anyndk;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,10 +42,15 @@ public class MainActivity extends AppCompatActivity {
         // 动态注册Java方法
 //        AnyNdk.dynamicNative();
 //        AnyNdk.dynamicNative(12);
-        JavaHelper javaHelper = new JavaHelper();
-        AnyNdk.native11_5(javaHelper);
+//        JavaHelper javaHelper = new JavaHelper();
+//        AnyNdk.native11_5(javaHelper);
+//
+//        Log.e("dds_native", "我先执行");
 
-        Log.e("dds_native", "我先执行");
+
+        // c++ 面向对象编程
+
+        AnyNdk.native5();
 
 
     }
