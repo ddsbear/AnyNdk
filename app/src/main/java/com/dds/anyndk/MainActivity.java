@@ -1,8 +1,16 @@
 package com.dds.anyndk;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+
+import com.dds.opengl.DouCameraActivity;
+import com.dds.opengl.utils.Consumer;
+import com.dds.opengl.utils.Permissions;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,10 +58,28 @@ public class MainActivity extends AppCompatActivity {
 
         // c++ 面向对象编程
 
-        AnyNdk.native5();
+//        AnyNdk.native5();
 
 
     }
 
 
+    // openGL显示摄像头
+    public void onDouyinCamera(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Permissions.request(this, new String[]{Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, new Consumer<Integer>() {
+                @Override
+                public void accept(Integer integer) {
+                    if (integer == PackageManager.PERMISSION_GRANTED) {
+                        DouCameraActivity.openActivity(MainActivity.this);
+                    }
+
+                }
+            });
+        }
+
+
+    }
 }

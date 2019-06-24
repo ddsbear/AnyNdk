@@ -1,6 +1,10 @@
 # AnyNdk
 让你的开源更简单系列——c++的一些例子和工具
 
+**csdn链接**：https://blog.csdn.net/u011077027/column/info/40423
+
+**简书链接**：https://www.jianshu.com/c/61e5d23ffa6e
+
 ### 1. c/c++基础
 
 [【NDK系列1】基本数据类型与内存布局](csdn/NDK系列1_基本数据类型与内存布局.md)
@@ -26,5 +30,7 @@
 
 ### 3. 进阶
 
-[徒手撸一个抖音App(1) openGL显示摄像头](csdn/opengl/opengl系列1_opengl显示摄像头.md)
+[徒手撸一个抖音App(1) 初识openGL ES](csdn/opengl/opengl系列1_初识openGL.md)
+
+[徒手撸一个抖音App(2) openGL显示摄像头](csdn/opengl/opengl系列1_opengl显示摄像头.md)
 
