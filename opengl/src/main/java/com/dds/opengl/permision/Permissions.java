@@ -1,4 +1,4 @@
-package com.dds.opengl.utils;
+package com.dds.opengl.permision;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

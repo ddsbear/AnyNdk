@@ -1,4 +1,4 @@
-package com.dds.anyndk;
+package com.trustmobi.anyndk;
 
 import android.util.Log;
 

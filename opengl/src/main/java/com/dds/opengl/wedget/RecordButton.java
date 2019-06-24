@@ -6,10 +6,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * @author Lance
- * @date 2018/10/8
- */
 public class RecordButton extends AppCompatTextView {
 
 

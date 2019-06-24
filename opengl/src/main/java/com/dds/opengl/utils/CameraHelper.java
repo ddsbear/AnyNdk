@@ -1,89 +1,147 @@
 package com.dds.opengl.utils;
 
-import android.graphics.ImageFormat;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 
-public class CameraHelper implements Camera.PreviewCallback {
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-    private static final String TAG = "CameraHelper";
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
-    private int mCameraId;
+public class CameraHelper {
+
+    private Config mConfig;
     private Camera mCamera;
-    private byte[] buffer;
-    private Camera.PreviewCallback mPreviewCallback;
-    private SurfaceTexture mSurfaceTexture;
+    private CameraSizeComparator sizeComparator;
+    private Point mPreSize;
 
-    public CameraHelper(int cameraId) {
-        mCameraId = cameraId;
+
+    private Camera.Size picSize;
+    private Camera.Size preSize;
+
+
+    public CameraHelper() {
+        this.mConfig = new Config();
+        mConfig.minPreviewWidth = 720;
+        mConfig.minPictureWidth = 720;
+        mConfig.rate = 1.778f;
+        sizeComparator = new CameraSizeComparator();
     }
 
-    public void switchCamera() {
-        if (mCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-            mCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
-        } else {
-            mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
-        }
-        stopPreview();
-        startPreview(mSurfaceTexture);
-    }
-
-    public int getCameraId() {
-        return mCameraId;
-    }
-
-    public void stopPreview() {
+    /**
+     * 打开摄像头
+     *
+     * @param cameraId 打开的摄像头的ID
+     * @return 是否成功打开摄像头
+     */
+    public boolean open(int cameraId) {
+        mCamera = Camera.open(cameraId);
         if (mCamera != null) {
-            //预览数据回调接口
-            mCamera.setPreviewCallback(null);
-            //停止预览
-            mCamera.stopPreview();
-            //释放摄像头
-            mCamera.release();
-            mCamera = null;
+            Camera.Parameters param = mCamera.getParameters();
+            picSize = getPropPictureSize(param.getSupportedPictureSizes(), mConfig.rate, mConfig.minPictureWidth);
+            preSize = getPropPreviewSize(param.getSupportedPreviewSizes(), mConfig.rate, mConfig.minPreviewWidth);
+            param.setPictureSize(picSize.width, picSize.height);
+            param.setPreviewSize(preSize.width, preSize.height);
+            mCamera.setParameters(param);
+            Camera.Size pre = param.getPreviewSize();
+            mPreSize = new Point(pre.height, pre.width);
+            return true;
         }
+        return false;
     }
 
-    public void startPreview(SurfaceTexture surfaceTexture) {
-        mSurfaceTexture = surfaceTexture;
-        try {
-            //获得camera对象
-            mCamera = Camera.open(mCameraId);
-            //配置camera的属性
-            Camera.Parameters parameters = mCamera.getParameters();
-            //设置预览数据格式为nv21
-            parameters.setPreviewFormat(ImageFormat.NV21);
-            //这是摄像头宽、高
-            parameters.setPreviewSize(WIDTH, HEIGHT);
-            // 设置摄像头 图像传感器的角度、方向
-            mCamera.setParameters(parameters);
-            buffer = new byte[WIDTH * HEIGHT * 3 / 2];
-            //数据缓存区
-            mCamera.addCallbackBuffer(buffer);
-            mCamera.setPreviewCallbackWithBuffer(this);
-            //设置预览画面
-            mCamera.setPreviewTexture(mSurfaceTexture);
+    public boolean preview() {
+        if (mCamera != null) {
             mCamera.startPreview();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean close() {
+        if (mCamera != null) {
+            try {
+                mCamera.stopPreview();
+                mCamera.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setPreviewTexture(SurfaceTexture texture) {
+        if (mCamera != null) {
+            try {
+                mCamera.setPreviewTexture(texture);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Point getPreviewSize() {
+        return mPreSize;
+    }
+
+    private Camera.Size getPropPreviewSize(List<Camera.Size> list, float th, int minWidth) {
+        Collections.sort(list, sizeComparator);
+
+        int i = 0;
+        for (Camera.Size s : list) {
+            if ((s.height >= minWidth) && equalRate(s, th)) {
+                break;
+            }
+            i++;
+        }
+        if (i == list.size()) {
+            i = 0;
+        }
+        return list.get(i);
+    }
+
+    private Camera.Size getPropPictureSize(List<Camera.Size> list, float th, int minWidth) {
+        Collections.sort(list, sizeComparator);
+
+        int i = 0;
+        for (Camera.Size s : list) {
+            if ((s.height >= minWidth) && equalRate(s, th)) {
+                break;
+            }
+            i++;
+        }
+        if (i == list.size()) {
+            i = 0;
+        }
+        return list.get(i);
+    }
+
+    private boolean equalRate(Camera.Size s, float rate) {
+        float r = (float) (s.width) / (float) (s.height);
+        if (Math.abs(r - rate) <= 0.03) {
+            return true;
+        } else {
+            return false;
         }
     }
 
 
-    public void setPreviewCallback(Camera.PreviewCallback previewCallback) {
-        mPreviewCallback = previewCallback;
-    }
-
-
-    @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        // data数据依然是倒的
-        if (null != mPreviewCallback) {
-            mPreviewCallback.onPreviewFrame(data, camera);
+    private class CameraSizeComparator implements Comparator<Camera.Size> {
+        public int compare(Camera.Size lhs, Camera.Size rhs) {
+            if (lhs.height == rhs.height) {
+                return 0;
+            } else if (lhs.height > rhs.height) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
-        camera.addCallbackBuffer(buffer);
     }
 
-
+    class Config {
+        float rate; //宽高比
+        int minPreviewWidth;
+        int minPictureWidth;
+    }
 }

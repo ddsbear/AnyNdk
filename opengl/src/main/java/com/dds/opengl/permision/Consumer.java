@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package com.dds.opengl.utils;
+package com.dds.opengl.permision;
 
 /**
  * Represents an operation that accepts a single input argument and returns no

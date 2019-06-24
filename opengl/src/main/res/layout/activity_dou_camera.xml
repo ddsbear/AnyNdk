@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dds.opengl.DouCameraActivity">
 
-    <com.dds.opengl.wedget.DouyinView
-        android:id="@+id/douyinView"
+    <RelativeLayout
+        android:id="@+id/capture_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_above="@+id/btn_record"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:background="@drawable/record_speed_background"
