@@ -6,6 +6,7 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.AttributeSet;
 
 import com.dds.opengl.utils.CameraHelper;
 
@@ -17,10 +18,21 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
 
     private GLCameraDrawer glCameraDrawer;
     private CameraHelper cameraHelper;
-    public static int cameraId = 1;  // 要打开的摄像头的ID
+
+
+    public static int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;  // 要打开的摄像头的ID
 
     public CaptureView(Context context) {
         super(context);
+        init();
+    }
+
+    public CaptureView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    private void init() {
         // 初始化
         glCameraDrawer = new GLCameraDrawer(getContext());
         // 创建摄像头资源
@@ -36,7 +48,6 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
          */
         setRenderMode(RENDERMODE_WHEN_DIRTY);
     }
-
 
     // ===========================設置录制速度=========================================
     //默认正常速度
@@ -81,11 +92,15 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        // 初始化render
         glCameraDrawer.onSurfaceCreated(gl, config);
-
-        cameraHelper.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+        // 打开摄像头
+        cameraHelper.open(cameraId);
+        // 获取预览宽高
         Point point = cameraHelper.getPreviewSize();
         glCameraDrawer.setDataSize(point.x, point.y);
+
+
         cameraHelper.setPreviewTexture(glCameraDrawer.getSurfaceTexture());
         glCameraDrawer.getSurfaceTexture().setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener() {
             @Override

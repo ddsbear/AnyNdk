@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
@@ -51,10 +50,10 @@ public class DouCameraActivity extends AppCompatActivity {
 
     private void initView() {
         captureContainer = findViewById(R.id.capture_container);
-        douyinView = new CaptureView(this);
-        douyinView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        captureContainer.addView(douyinView, 0);
+        //douyinView = new CaptureView(this);
+        //  douyinView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        //  ViewGroup.LayoutParams.WRAP_CONTENT));
+        //  captureContainer.addView(douyinView, 0);
 
 
     }

@@ -1,6 +1,7 @@
 package com.dds.opengl.filter.impl;
 
 import android.content.Context;
+import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -32,6 +33,21 @@ public class OseFilter {
     protected FloatBuffer mTextureBuffer; // 纹理坐标Buffer
 
 
+    //单位矩阵
+    public static final float[] OM = new float[]{
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+    };
+
+    private int textureId = 0;
+    private float[] matrix = Arrays.copyOf(OM, 16);
+
+    private int mHCoordMatrix;
+    private float[] mCoordMatrix = Arrays.copyOf(OM, 16);
+
+
     //顶点坐标
     private float pos[] = {
             -1.0f, 1.0f,
@@ -48,53 +64,27 @@ public class OseFilter {
             1.0f, 1.0f,
     };
 
-    //单位矩阵
-    public static final float[] OM = new float[]{
-            1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-    };
 
+    public OseFilter() {
+        //创建一个数据缓冲区
+        //4个点 每个点两个数据(x,y) 数据类型float
+        mVertexBuffer = ByteBuffer.allocateDirect(4 * 2 * 4)
+                .order(ByteOrder.nativeOrder())
+                .asFloatBuffer();
+        mVertexBuffer.clear();
+        mVertexBuffer.put(pos);
+        mVertexBuffer.position(0);
 
-    public OseFilter(Context context) {
-        // 读出顶点着色器:vertexSource 和 片源着色器:fragmentSource
-        String vertexSource = OpenUtils.readRawTextFile(context, R.raw.camera_vertex);
-        String fragmentSource = OpenUtils.readRawTextFile(context, R.raw.camera_frag);
-
-        mProgram = createOpenGLProgram(vertexSource, fragmentSource);
-        if (mProgram != 0) {
-            // 顶点
-            mHPosition = GLES20.glGetAttribLocation(mProgram, "vPosition");
-            mHCoord = GLES20.glGetAttribLocation(mProgram, "vCoord");
-            mHMatrix = GLES20.glGetUniformLocation(mProgram, "vMatrix");
-            // 片元
-            mHTexture = GLES20.glGetUniformLocation(mProgram, "vTexture");
-
-            //创建一个数据缓冲区
-            //4个点 每个点两个数据(x,y) 数据类型float
-            mVertexBuffer = ByteBuffer.allocateDirect(4 * 2 * 4)
-                    .order(ByteOrder.nativeOrder())
-                    .asFloatBuffer();
-
-            mVertexBuffer.put(pos);
-            mVertexBuffer.position(0);
-
-            // 纹理 buffer
-            mTextureBuffer = ByteBuffer.allocateDirect(4 * 2 * 4)
-                    .order(ByteOrder.nativeOrder())
-                    .asFloatBuffer();
-            mTextureBuffer.clear();
-            mTextureBuffer.put(coord);
-            mTextureBuffer.position(0);
-
-        }
-
+        // 纹理 buffer
+        mTextureBuffer = ByteBuffer.allocateDirect(4 * 2 * 4)
+                .order(ByteOrder.nativeOrder())
+                .asFloatBuffer();
+        mTextureBuffer.clear();
+        mTextureBuffer.put(coord);
+        mTextureBuffer.position(0);
 
     }
 
-    private int textureId = 0;
-    private float[] matrix = Arrays.copyOf(OM, 16);
 
     public final void setTextureId(int textureId) {
         this.textureId = textureId;
@@ -104,11 +94,31 @@ public class OseFilter {
         this.matrix = matrix;
     }
 
+    public final void create(Context context) {
+        // 读出顶点着色器:vertexSource 和 片源着色器:fragmentSource
+        String vertexSource = OpenUtils.readRawTextFile(context, R.raw.camera_vertex);
+        String fragmentSource = OpenUtils.readRawTextFile(context, R.raw.camera_frag);
+
+        mProgram = createOpenGLProgram(vertexSource, fragmentSource);
+        // 顶点
+        mHPosition = GLES20.glGetAttribLocation(mProgram, "vPosition");
+        mHCoord = GLES20.glGetAttribLocation(mProgram, "vCoord");
+        mHMatrix = GLES20.glGetUniformLocation(mProgram, "vMatrix");
+        // 片元
+        mHTexture = GLES20.glGetUniformLocation(mProgram, "vTexture");
+
+        //自定义
+        mHCoordMatrix = GLES20.glGetUniformLocation(mProgram, "vCoordMatrix");
+
+
+    }
+
+
     public void draw() {
         onClear();
 
         // 使用着色器程序
-        GLES20.glUseProgram(mProgram);
+        onUseProgram();
 
         // 设置其他扩展数据
         onSetExpandData();
@@ -130,11 +140,20 @@ public class OseFilter {
     }
 
     /**
+     * 使用着色器程序
+     */
+    protected void onUseProgram() {
+        GLES20.glUseProgram(mProgram);
+    }
+
+    /**
      * 设置其他扩展数据
      */
     protected void onSetExpandData() {
         //3、变换矩阵
         GLES20.glUniformMatrix4fv(mHMatrix, 1, false, matrix, 0);
+
+        GLES20.glUniformMatrix4fv(mHCoordMatrix, 1, false, mCoordMatrix, 0);
     }
 
     /**
@@ -142,10 +161,15 @@ public class OseFilter {
      */
     protected void onBindTexture() {
         // 激活图层
+//        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+//        // 图像数据
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
+//        //传递参数 0：需要和纹理层GL_TEXTURE0对应
+//        GLES20.glUniform1i(mHTexture, 0);
+
+
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        // 图像数据
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-        //传递参数 0：需要和纹理层GL_TEXTURE0对应
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId);
         GLES20.glUniform1i(mHTexture, 0);
     }
 

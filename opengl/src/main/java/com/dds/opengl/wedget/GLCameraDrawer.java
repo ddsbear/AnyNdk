@@ -22,6 +22,7 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
     private Context mContext;
 
     public GLCameraDrawer(Context context) {
+        baseFilter = new OseFilter();
         mContext = context;
     }
 
@@ -42,7 +43,7 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
         // 初始化SurfaceTexture
         mSurfaceTexture = new SurfaceTexture(texture);
         // 注意：必须在gl线程操作openGL
-        baseFilter = new OseFilter(mContext);
+        baseFilter.create(mContext);
         baseFilter.setTextureId(texture);
 
     }
@@ -53,8 +54,27 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         setViewSize(width, height);
+        // baseFilter.setMatrix(mtx);
     }
 
+
+    /**
+     * 开始画画吧
+     *
+     * @param gl
+     */
+    @Override
+    public void onDrawFrame(GL10 gl) {
+        if (mSurfaceTexture != null) {
+            // 更新纹理图像为从图像流中提取的最近一帧
+            mSurfaceTexture.updateTexImage();
+        }
+        // 绘制纹理
+        baseFilter.draw();
+    }
+
+
+    //------------------------------------------------------------------------------
     public void setViewSize(int width, int height) {
         this.width = width;
         this.height = height;
@@ -106,28 +126,10 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
         return m;
     }
 
-    /**
-     * 开始画画吧
-     *
-     * @param gl
-     */
-    @Override
-    public void onDrawFrame(GL10 gl) {
-        if (mSurfaceTexture != null) {
-            // 更新纹理图像为从图像流中提取的最近一帧
-            mSurfaceTexture.updateTexImage();
-        }
-        // 绘制纹理
-        baseFilter.draw();
-    }
-
-
-    //------------------------------------------------------------------------------
-
     //通过openGL创建一个纹理id
     private int createTextureID() {
         int[] texture = new int[1];
-        GLES20.glGenTextures(1, texture, 0);  // 创建纹理，生成你要操作的纹理对象的索引
+        GLES20.glGenTextures(texture.length, texture, 0);  // 创建纹理，生成你要操作的纹理对象的索引
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, texture[0]); // 绑定纹理，告诉OpenGL下面代码中对2D纹理的任何设置都是针对索引为0的纹理的
 
         // glTexParameterF 是设置纹理贴图的参数属性

@@ -3,6 +3,7 @@ package com.dds.opengl.utils;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -10,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class CameraHelper {
-
+    private static final String TAG = "dds_CameraHelper";
     private Config mConfig;
     private Camera mCamera;
     private CameraSizeComparator sizeComparator;
@@ -29,22 +30,21 @@ public class CameraHelper {
         sizeComparator = new CameraSizeComparator();
     }
 
-    /**
-     * 打开摄像头
-     *
-     * @param cameraId 打开的摄像头的ID
-     * @return 是否成功打开摄像头
-     */
+
     public boolean open(int cameraId) {
         mCamera = Camera.open(cameraId);
         if (mCamera != null) {
+            // 获取合适的图片尺寸和预览尺寸
             Camera.Parameters param = mCamera.getParameters();
             picSize = getPropPictureSize(param.getSupportedPictureSizes(), mConfig.rate, mConfig.minPictureWidth);
             preSize = getPropPreviewSize(param.getSupportedPreviewSizes(), mConfig.rate, mConfig.minPreviewWidth);
             param.setPictureSize(picSize.width, picSize.height);
             param.setPreviewSize(preSize.width, preSize.height);
             mCamera.setParameters(param);
+
+
             Camera.Size pre = param.getPreviewSize();
+            Log.d(TAG, "preview height:" + pre.height + ",width:" + pre.width);
             mPreSize = new Point(pre.height, pre.width);
             return true;
         }
@@ -103,7 +103,6 @@ public class CameraHelper {
 
     private Camera.Size getPropPictureSize(List<Camera.Size> list, float th, int minWidth) {
         Collections.sort(list, sizeComparator);
-
         int i = 0;
         for (Camera.Size s : list) {
             if ((s.height >= minWidth) && equalRate(s, th)) {

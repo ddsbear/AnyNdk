@@ -10,7 +10,12 @@
     <RelativeLayout
         android:id="@+id/capture_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.dds.opengl.wedget.CaptureView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 
 
     <RadioGroup
@@ -18,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_above="@+id/btn_record"
-        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:background="@drawable/record_speed_background"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RadioButton
             android:id="@+id/rb_extra_slow"
