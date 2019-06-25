@@ -15,12 +15,10 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer {
 
-
     private GLCameraDrawer glCameraDrawer;
     private CameraHelper cameraHelper;
-
-
-    public static int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;  // 要打开的摄像头的ID
+    // 要打开的摄像头的ID
+    public static int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     public CaptureView(Context context) {
         super(context);
@@ -99,27 +97,30 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
         // 获取预览宽高
         Point point = cameraHelper.getPreviewSize();
         glCameraDrawer.setDataSize(point.x, point.y);
-
-
+        // 设置预览控件
         cameraHelper.setPreviewTexture(glCameraDrawer.getSurfaceTexture());
+        // 渲染回调
         glCameraDrawer.getSurfaceTexture().setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener() {
             @Override
             public void onFrameAvailable(SurfaceTexture surfaceTexture) {
                 requestRender();
             }
         });
+        // 开始预览画面
         cameraHelper.preview();
 
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        // 界面改变
         GLES20.glViewport(0, 0, width, height);
         glCameraDrawer.setViewSize(width, height);
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        // 画出界面
         glCameraDrawer.onDrawFrame(gl);
 
     }

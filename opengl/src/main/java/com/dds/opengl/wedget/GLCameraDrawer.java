@@ -14,11 +14,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GLCameraDrawer implements GLSurfaceView.Renderer {
     private SurfaceTexture mSurfaceTexture;
+    // OseFilter 使用openGL渲染画面
     private OseFilter baseFilter;
-
     private float[] mtx = new float[16];
-
-
     private Context mContext;
 
     public GLCameraDrawer(Context context) {
@@ -60,8 +58,6 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
 
     /**
      * 开始画画吧
-     *
-     * @param gl
      */
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -75,6 +71,7 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
 
 
     //------------------------------------------------------------------------------
+
     public void setViewSize(int width, int height) {
         this.width = width;
         this.height = height;
@@ -89,10 +86,13 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
 
     private void calculateMatrix() {
         getShowMatrix(mtx, this.dataWidth, this.dataHeight, this.width, this.height);
+
         if (CaptureView.cameraId == 1) {
+            // 前置摄像头旋转90度并
             flip(mtx, true, false);
             rotate(mtx, 90);
         } else {
+            // 前置旋转270度
             rotate(mtx, 270);
         }
         baseFilter.setMatrix(mtx);

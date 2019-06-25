@@ -17,11 +17,6 @@ public class CameraHelper {
     private CameraSizeComparator sizeComparator;
     private Point mPreSize;
 
-
-    private Camera.Size picSize;
-    private Camera.Size preSize;
-
-
     public CameraHelper() {
         this.mConfig = new Config();
         mConfig.minPreviewWidth = 720;
@@ -30,14 +25,14 @@ public class CameraHelper {
         sizeComparator = new CameraSizeComparator();
     }
 
-
+    // 打开相机
     public boolean open(int cameraId) {
         mCamera = Camera.open(cameraId);
         if (mCamera != null) {
             // 获取合适的图片尺寸和预览尺寸
             Camera.Parameters param = mCamera.getParameters();
-            picSize = getPropPictureSize(param.getSupportedPictureSizes(), mConfig.rate, mConfig.minPictureWidth);
-            preSize = getPropPreviewSize(param.getSupportedPreviewSizes(), mConfig.rate, mConfig.minPreviewWidth);
+            Camera.Size picSize = getPropPictureSize(param.getSupportedPictureSizes(), mConfig.rate, mConfig.minPictureWidth);
+            Camera.Size preSize = getPropPreviewSize(param.getSupportedPreviewSizes(), mConfig.rate, mConfig.minPreviewWidth);
             param.setPictureSize(picSize.width, picSize.height);
             param.setPreviewSize(preSize.width, preSize.height);
             mCamera.setParameters(param);
@@ -51,6 +46,7 @@ public class CameraHelper {
         return false;
     }
 
+    // 开始预览
     public boolean preview() {
         if (mCamera != null) {
             mCamera.startPreview();
@@ -58,6 +54,7 @@ public class CameraHelper {
         return true;
     }
 
+    // 关闭摄像头
     public boolean close() {
         if (mCamera != null) {
             try {
@@ -71,6 +68,7 @@ public class CameraHelper {
         return true;
     }
 
+    // 设置渲染的控件SurfaceTexture
     public void setPreviewTexture(SurfaceTexture texture) {
         if (mCamera != null) {
             try {
@@ -81,6 +79,7 @@ public class CameraHelper {
         }
     }
 
+    // 获取预览的宽高
     public Point getPreviewSize() {
         return mPreSize;
     }
