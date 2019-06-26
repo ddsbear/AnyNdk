@@ -18,6 +18,8 @@
 
 [【NDK系列5】c++基础2 c++面向对象](csdn/NDK系列5_c++基础2.md)
 
+[【NDK系列6】c++基础3 c++ 容器](csdn/NDK系列6_c++基础3_容器.md)
+
 ### 2. Jni编程
 
 [【NDK系列11】Java和c++交互 Jni初识](csdn/NDK系列11_Java和c++交互.md)
