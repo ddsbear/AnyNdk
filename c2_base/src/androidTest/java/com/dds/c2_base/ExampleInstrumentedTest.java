@@ -1,4 +1,4 @@
-package com.trustmobi.anyndk;
+package com.dds.c2_base;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.trustmobi.anyndk.test", appContext.getPackageName());
+        assertEquals("com.trustmobi.c2_base.test", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.trustmobi.anyndk;
+package com.dds.anyndk;
 
 /**
  * Created by dds on 2019/6/18.

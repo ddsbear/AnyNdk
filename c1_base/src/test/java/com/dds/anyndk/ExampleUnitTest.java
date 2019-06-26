@@ -1,4 +1,4 @@
-package com.trustmobi.anyndk;
+package com.dds.anyndk;
 
 import org.junit.Test;
 

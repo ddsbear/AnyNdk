@@ -10,7 +10,6 @@ import android.view.View;
 import com.dds.opengl.DouCameraActivity;
 import com.dds.opengl.permision.Consumer;
 import com.dds.opengl.permision.Permissions;
-import com.trustmobi.anyndk.C1Activity;
 
 public class MainActivity extends AppCompatActivity {
 

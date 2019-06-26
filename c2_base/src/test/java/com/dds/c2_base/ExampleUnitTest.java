@@ -1,4 +1,4 @@
-package com.trustmobi.c2_base;
+package com.dds.c2_base;
 
 import org.junit.Test;
 
