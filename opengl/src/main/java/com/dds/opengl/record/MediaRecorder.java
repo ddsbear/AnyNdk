@@ -209,4 +209,26 @@ public class MediaRecorder {
     }
 
 
+    public void stop() {
+        isStart = false;
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                getCodec(true);
+                mMediaCodec.stop();
+                mMediaCodec.release();
+                mMediaCodec = null;
+                mMediaMuxer.stop();
+                mMediaMuxer.release();
+                mMediaMuxer = null;
+                mEglBase.release();
+                mEglBase = null;
+                mInputSurface = null;
+                mHandler.getLooper().quitSafely();
+                mHandler = null;
+            }
+        });
+    }
+
+
 }

@@ -34,7 +34,6 @@ public class DouCameraActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (douyinView != null) {
             douyinView.onResume();
         }

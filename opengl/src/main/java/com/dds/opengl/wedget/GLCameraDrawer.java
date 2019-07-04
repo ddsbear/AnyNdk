@@ -43,7 +43,6 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
         // 注意：必须在gl线程操作openGL
         baseFilter.create(mContext);
         baseFilter.setTextureId(texture);
-
     }
 
     /**
@@ -144,11 +143,5 @@ public class GLCameraDrawer implements GLSurfaceView.Renderer {
     }
 
 
-    public void startRecord(float speed) {
 
-    }
-
-    public void stopRecord() {
-
-    }
 }

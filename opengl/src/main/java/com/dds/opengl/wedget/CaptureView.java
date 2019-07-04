@@ -8,7 +8,10 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
+import com.dds.opengl.record.MediaRecorder;
 import com.dds.opengl.utils.CameraHelper;
+
+import java.io.IOException;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,6 +20,8 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
 
     private GLCameraDrawer glCameraDrawer;
     private CameraHelper cameraHelper;
+
+    private MediaRecorder mediaRecorder;
     // 要打开的摄像头的ID
     public static int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
@@ -79,11 +84,15 @@ public class CaptureView extends GLSurfaceView implements GLSurfaceView.Renderer
                 speed = 3.f;
                 break;
         }
-        glCameraDrawer.startRecord(speed);
+        try {
+            mediaRecorder.start(speed);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stopRecord() {
-        glCameraDrawer.stopRecord();
+        mediaRecorder.stop();
     }
 
     //=============================Render回调=========================================
