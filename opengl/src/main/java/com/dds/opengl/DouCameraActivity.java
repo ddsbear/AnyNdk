@@ -49,12 +49,6 @@ public class DouCameraActivity extends AppCompatActivity {
 
     private void initView() {
         captureContainer = findViewById(R.id.capture_container);
-        //douyinView = new CaptureView(this);
-        //  douyinView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        //  ViewGroup.LayoutParams.WRAP_CONTENT));
-        //  captureContainer.addView(douyinView, 0);
-
-
     }
 
     private void initListener() {

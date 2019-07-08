@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // c/c++基础测试
     public void onC1base(View view) {
         C1Activity.openActivity(this);
 

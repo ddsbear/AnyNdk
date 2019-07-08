@@ -20,6 +20,14 @@
 
 [【NDK系列6】c++基础3 c++ 容器](csdn/NDK系列6_c++基础3_容器.md)
 
+[【NDK系列7】c++基础4 文件操作和流操作](csdn/NDK系列7_c++基础3_文件与流操作.md)
+
+[【NDK系列8】c++基础5 异常](csdn/NDK系列8_c++基础3_异常.md)
+
+[【NDK系列9】c++基础6 线程](csdn/NDK系列9_c++线程.md)
+
+[【NDK系列10】c++基础7 智能指针](csdn/NDK系列10_c++智能指针.md)
+
 ### 2. Jni编程
 
 [【NDK系列11】Java和c++交互 Jni初识](csdn/NDK系列11_Java和c++交互.md)
