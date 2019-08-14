@@ -300,7 +300,9 @@ void WriteTextLogBottom(int level, const char *log) {
 
 ## 大功告成
 
-具体代码收录到https://github.com/ddssingsong/AnyNdk    c2_base测试代码里
+具体代码收录到https://github.com/ddssingsong/AnyNdk    
+
+c2_base测试代码里
 
 谢谢关注
 
