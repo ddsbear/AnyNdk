@@ -63,28 +63,28 @@ void WriteTextLog(int level, const char *strFormat, ...) {
 
     switch (level) {
         case LOG_LEVEL_DEBUG:
-            sprintf(g_log_info, "%s [DEBUG] %s\n", timeStr, temBuf);
             LOGD("%s", g_log_info);
+            sprintf(g_log_info, "%s [DEBUG] %s\n", timeStr, temBuf);
             break;
 
         case LOG_LEVEL_INFO:
-            sprintf(g_log_info, "%s [INFO] %s\n", timeStr, temBuf);
             LOGI("%s", g_log_info);
+            sprintf(g_log_info, "%s [INFO] %s\n", timeStr, temBuf);
             break;
 
         case LOG_LEVEL_WARNING:
-            sprintf(g_log_info, "%s [WARN] %s\n", timeStr, temBuf);
             LOGW("%s", g_log_info);
+            sprintf(g_log_info, "%s [WARN] %s\n", timeStr, temBuf);
             break;
 
         case LOG_LEVEL_ERR:
-            sprintf(g_log_info, "%s [ERROR] %s\n", timeStr, temBuf);
             LOGE("%s", g_log_info);
+            sprintf(g_log_info, "%s [ERROR] %s\n", timeStr, temBuf);
             break;
 
         default:
-            sprintf(g_log_info, "%s [NONE] %s\n", timeStr, temBuf);
             LOGI("%s", g_log_info);
+            sprintf(g_log_info, "%s [NONE] %s\n", timeStr, temBuf);
             break;
     }
 
@@ -112,7 +112,7 @@ void WriteTextLogBottom(int level, const char *log) {
 
         if (info.st_size >= LOG_FILE_MAX_SIZE)// loop write
         {
-
+            // 这里使用复写的方式，保证日志文件不会超过LOG_FILE_MAX_SIZE
             fp = fopen(g_logFilePath.c_str(), "r+");
             if (nullptr == fp) {
                 LOGE("%s, fopen(r+) %s fail, size:%ld, err:%d", __func__, g_logFilePath.c_str(),
@@ -141,5 +141,6 @@ void WriteTextLogBottom(int level, const char *log) {
 }
 
 void _LogClose() {
-
+    g_log_file_level = LOG_LEVEL_NONE;
+    g_log_screen_level = LOG_LEVEL_NONE;
 }

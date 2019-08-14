@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Utils.log(4, "我是6");
         Utils.log(4, "我是7");
         Utils.log(4, "我是8");
+
     }
 
     // openGL显示摄像头

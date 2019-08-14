@@ -12,7 +12,7 @@
 #define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,  LOG_TAG, __VA_ARGS__ )
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
-#define LOG_TEXT_MAX_LENGTH        (1024)  //  单个日志大小
+#define LOG_TEXT_MAX_LENGTH        (1024)  //  单条日志大小
 #define LOG_FILE_MAX_SIZE    (1024*1024*2) //  文件最大为2MB
 
 enum {
@@ -36,10 +36,24 @@ extern "C" {
  */
 int _LogInit(const char *pFile, const char *filename, int logLevel, int printScreen);
 
+/**
+ * 写日志
+ * @param level
+ * @param strFormat
+ * @param ...
+ */
 void WriteTextLog(int level, const char *strFormat, ...);
 
+/**
+ * 向文件中写入日志
+ * @param level
+ * @param log
+ */
 void WriteTextLogBottom(int level, const char *log);
 
+/**
+ * 关闭日志库
+ */
 void _LogClose();
 
 #ifdef __cplusplus
