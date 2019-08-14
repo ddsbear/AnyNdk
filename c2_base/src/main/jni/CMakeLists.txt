@@ -1,16 +1,18 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
-aux_source_directory(. SRC_SOURCE)
 
 include_directories(include)
+include_directories(utils)
 
 add_library(
-        native-lib
-        STATIC
-        ${SRC_SOURCE})
+        native-test
+        SHARED
+        native-test.cpp
+        utils/util.cpp
+        log.cpp)
 
 
 target_link_libraries(
-        native-lib
+        native-test
         log)
