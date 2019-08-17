@@ -2,11 +2,10 @@ cmake_minimum_required(VERSION 3.4.1)
 
 include_directories(include)
 
-
 add_library(gmcipher
         SHARED
         GmCipher.cpp
-        log.cpp)
+        Cipher.cpp)
 
 
 add_library(myssl STATIC IMPORTED)
