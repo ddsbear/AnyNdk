@@ -22,6 +22,10 @@ set_target_properties(ssl
         ${CMAKE_SOURCE_DIR}/libs/${CMAKE_ANDROID_ARCH_ABI}/libssl.a)
 
 
+find_library(
+        log-lib
+        log)
+
 target_link_libraries( # Specifies the target library.
         native-lib
         crypto
