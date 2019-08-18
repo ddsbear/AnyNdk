@@ -1,16 +1,19 @@
 package com.dds.gmssl;
 
 /**
- * Created by dds on 2019/8/16.
+ * Created by dds on 2019/8/18.
  * android_shuai@163.com
  */
 public class GmCipher {
-
-
-    public native void LogInit(String dir, int logFileLevel, int logScreenLevel);
-
-    // 生成随机数
-    public native byte[] generateRandom(int length);
+    // Used to load the 'native-lib' library on application startup.
+    static {
+        System.loadLibrary("native-lib");
+    }
+    /**
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
+    public native String stringFromJNI();
 
 
     private static GmCipher gmCipher;

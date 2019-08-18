@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dds.gmssl.GmCipher;
-
 public class GmSSLActivity extends AppCompatActivity {
 
     private EditText editContent;
@@ -31,8 +29,6 @@ public class GmSSLActivity extends AppCompatActivity {
     }
 
     public void generateRandom(View view) {
-        byte[] bytes = GmCipher.getInstance().generateRandom(32);
-        String str = new String(bytes);
-        text.setText(str);
+
     }
 }

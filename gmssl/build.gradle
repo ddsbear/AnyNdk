@@ -14,7 +14,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags ""
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "x86"//,"arm64-v8a","x86_64"
             }
         }
     }
@@ -25,10 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     externalNativeBuild {
         cmake {
-            path "src/main/jni/CMakeLists.txt"
+            path "src/main/cpp/CMakeLists.txt"
             version "3.10.2"
         }
     }
