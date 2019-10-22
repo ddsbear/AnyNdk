@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.dds.opengl.permision.Consumer;
-import com.dds.opengl.permision.Permissions;
+import com.dds.anyndk.permision.Consumer;
+import com.dds.anyndk.permision.Permissions;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     // c/c++的工具
     public void onC2base(View view) {
@@ -88,5 +88,10 @@ public class MainActivity extends AppCompatActivity {
     public void openssl(View view) {
         GmSSLActivity.openActivity(this);
 
+    }
+
+    // parson
+    public void parson(View view) {
+        ParsonActivity.openActivity(this);
     }
 }

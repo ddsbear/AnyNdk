@@ -28,9 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     // implementation project(path: ':c1_base')
     // implementation project(path: ':c2_base')
-     implementation project(path: ':opengl')
-     implementation project(path: ':gmssl')
-     implementation project(path: ':parson')
+//    implementation project(path: ':opengl')
+//    implementation project(path: ':gmssl')
+    implementation project(path: ':parson')
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'

@@ -23,17 +23,16 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onDouyinCamera"
-        android:text="openGL显示摄像头"
+        android:onClick="openssl"
+        android:text="GmSSL(openssl支持国密)测试"
         android:textAllCaps="false" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="openssl"
-        android:text="GmSSL(openssl支持国密)测试"
+        android:onClick="parson"
+        android:text="Parson(json解析)"
         android:textAllCaps="false" />
 </LinearLayout>
