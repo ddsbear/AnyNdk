@@ -1,5 +1,6 @@
 package com.dds.parson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,10 @@ public class User {
 
     private String name;
     private String occu;
-    private List<String> habbits;
+    private ArrayList<String> habbits;
+
+    public User() {
+    }
 
     public String getName() {
         return name;
@@ -32,7 +36,7 @@ public class User {
         return habbits;
     }
 
-    public void setHabbits(List<String> habbits) {
+    public void setHabbits(ArrayList<String> habbits) {
         this.habbits = habbits;
     }
 

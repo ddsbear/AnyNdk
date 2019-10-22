@@ -39,7 +39,17 @@ public class ParsonActivity extends AppCompatActivity {
 
     public void decodeJson(View view) {
         String result = Parson.test();
-        Log.d("dds_test",result);
+        Log.d("dds_test", result);
         User user = Parson.parseJson(result);
+        if (user != null) {
+           // Log.d("dds_test", "name:" + user.getName());
+            //Log.d("dds_test", "occu:" + user.getOccu());
+            try {
+                Log.d("dds_test", "habit:" + user.getHabbits().get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }
 }

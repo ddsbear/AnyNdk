@@ -20,7 +20,7 @@ Java_com_dds_parson_Parson_test(
     json_object_set_string(json_object(root_value), "occupation", "Programmer");
     json_object_dotset_string(json_object(root_value), "address.city", "Cupertino");
     json_object_dotset_value(json_object(root_value), "sub.habbit",
-                             json_parse_string(R"(["看书","打球","美女"])"));
+                             json_parse_string(R"(["dsdssd","dsdsd","sdsdsd"])"));
     json_object_dotset_value(json_object(root_value), "contact.emails",
                              json_parse_string(R"(["email@example.com","email2@example.com"])"));
 
@@ -59,27 +59,82 @@ Java_com_dds_parson_Parson_parseJson(JNIEnv *env, jclass clazz, jstring json) {
     if (jsonValueType == JSONArray) {
         LOGD("json start with jsonObject");
     }
-    char g_log_info[200];
+    char g_log_info[300];
     if (jsonValueType == JSONObject) {
         LOGD("json start with jsonObject");
         JSON_Object *jsonObject = json_value_get_object(root_value);
         const char *name = json_object_get_string(jsonObject, "name");
-        sprintf(g_log_info, "%s",name);
+        sprintf(g_log_info, "%s", name);
         LOGD("name : %s", g_log_info);
         const char *occu = json_object_get_string(jsonObject, "occupation");
-        sprintf(g_log_info, "%s",occu);
+        sprintf(g_log_info, "%s", occu);
         LOGD("occupation : %s", g_log_info);
+
+        // 反射类
+        jclass jClasss = env->FindClass("com/dds/parson/User");
+        //反射构造方法
+        jmethodID constructMethod = env->GetMethodID(jClasss, "<init>", "()V");
+
+        if (jClasss == NULL || constructMethod == NULL) {
+            return NULL;
+        }
+        jobject user = env->NewObject(jClasss, constructMethod);
+
+        jmethodID setName = env->GetMethodID(jClasss, "setName", "(Ljava/lang/String;)V");
+        jmethodID setOccu = env->GetMethodID(jClasss, "setOccu", "(Ljava/lang/String;)V");
+        jstring jName = env->NewStringUTF(name);
+        env->CallVoidMethod(user, setName, jName);
+        jstring jOccu = env->NewStringUTF(occu);
+        env->CallVoidMethod(user, setOccu, jOccu);
+
+
+        jmethodID setHabbit = env->GetMethodID(jClasss, "setHabbits", "(Ljava/util/ArrayList;)V");
+        if (setHabbit == NULL) {
+            LOGD("setHabbit method is NULL");
+            return NULL;
+        }
+
+        jclass list = env->FindClass("java/util/ArrayList");
+        jmethodID list_init = env->GetMethodID(list, "<init>", "(I)V");
+        jobject listObject = env->NewObject(list, list_init,4);
+        jmethodID list_add = env->GetMethodID(list, "add",
+                                              "(Ljava/lang/Object;)Z");
+
+        if (list == NULL || list_init == NULL) {
+            LOGD("list is NULL");
+            return NULL;
+        }
+
+        if (list_add == NULL) {
+            LOGD("add method is NULL");
+            return NULL;
+        }
+
+
         JSON_Array *habbits = json_object_dotget_array(jsonObject, "sub.habbit");
         size_t a = 0;
         size_t size = json_array_get_count(habbits);
+        LOGD("size %d", (int) size);
+
         for (a = 0; a < size; a++) {
             const char *ha = json_array_get_string(habbits, a);
-            sprintf(g_log_info, "%s",ha);
-            LOGD("habbit : %s", g_log_info);
+            sprintf(g_log_info, "%s", ha);
+            LOGD("habbit %d: %s", a, g_log_info);
+            jstring haa = env->NewStringUTF(ha);
+
+            bool flag = env->CallBooleanMethod(listObject, list_add, haa);
+            LOGD("flag:%d", flag);
         }
+        env->CallVoidMethod(user, setHabbit, listObject);
+
+        json_value_free(root_value);
+        return user;
+
     }
-    json_value_free(root_value);
+
+
     return NULL;
+
 
 }
 
