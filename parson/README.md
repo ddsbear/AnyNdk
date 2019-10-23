@@ -1,12 +1,8 @@
-#include <jni.h>
-#include <string>
-#include "parson.h"
-#include "android/log.h"
+## Jni json处理  parson的使用 
 
-#define  LOG_TAG    "dds_log"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,  LOG_TAG, __VA_ARGS__ )
+构造json
 
-
+```c
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_dds_parson_Parson_test(
         JNIEnv *env,
@@ -14,15 +10,15 @@ Java_com_dds_parson_Parson_test(
     char *serialized_string = 0;
     // 包装一段jsonObject
     JSON_Value *root_value = json_value_init_object();
-
+    
     // 设置简单参数
     json_object_set_string(json_object(root_value), "name", "大大帅");
     json_object_set_number(json_object(root_value), "age", 27);
     json_object_set_string(json_object(root_value), "occupation", "Programmer");
-
+    
     // 设置内联参数
     json_object_dotset_string(json_object(root_value), "address.city", "Cupertino");
-
+    
     // 设置数组
     json_object_dotset_value(json_object(root_value), "sub.habbit",
                              json_parse_string(R"(["dsdssd","dsdsd","sdsdsd"])"));
@@ -52,7 +48,52 @@ Java_com_dds_parson_Parson_test(
     return env->NewStringUTF(serialized_string);
 }
 
+```
 
+需要解析的对象
+
+```java
+public class User {
+
+    private String name;
+    private String occu;
+    private ArrayList<String> habbits;
+
+    public User() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOccu() {
+        return occu;
+    }
+
+    public void setOccu(String occu) {
+        this.occu = occu;
+    }
+
+    public List<String> getHabbits() {
+        return habbits;
+    }
+
+    public void setHabbits(ArrayList<String> habbits) {
+        this.habbits = habbits;
+    }
+
+
+}
+
+```
+
+解析json
+
+```c
 extern "C"
 JNIEXPORT jobject JNICALL
 Java_com_dds_parson_Parson_parseJson(JNIEnv *env, jclass clazz, jstring json) {
@@ -142,4 +183,6 @@ Java_com_dds_parson_Parson_parseJson(JNIEnv *env, jclass clazz, jstring json) {
 
 }
 
+
+```
 

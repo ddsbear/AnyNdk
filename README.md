@@ -41,13 +41,7 @@
 
 ### 3. 进阶
 
-[徒手撸一个抖音App(1) 初识openGL ES](csdn/opengl/opengl系列1_初识openGL.md)
-
-[徒手撸一个抖音App(2) openGL显示摄像头](csdn/opengl/opengl系列1_opengl显示摄像头.md)
-
-
-
-
+- [json处理   parson](https://blog.csdn.net/u011077027/article/details/102695586)
 
 ### 4. c++高级教程
 
