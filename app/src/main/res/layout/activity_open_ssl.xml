@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dds.anyndk.GmSSLActivity">
+    tools:context="com.dds.anyndk.OpenSSLActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,17 +12,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
-            android:id="@+id/edit_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="content" />
-
-        <EditText
-            android:id="@+id/edit_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="key" />
 
         <TextView
             android:id="@+id/text"
@@ -35,14 +24,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="generateRandom(生成随机数)"
             android:onClick="generateRandom"
+            android:text="generateRandom(生成随机数)"
             android:textAllCaps="false" />
 
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="AES"
             android:text="AES" />
 
         <Button

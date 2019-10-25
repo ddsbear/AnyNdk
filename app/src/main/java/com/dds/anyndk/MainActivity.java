@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // openssl  GmSSL
+    // openssl
     public void openssl(View view) {
-        GmSSLActivity.openActivity(this);
+        OpenSSLActivity.openActivity(this);
 
     }
 

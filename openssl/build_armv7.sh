@@ -8,7 +8,7 @@ export ANDROID_NDK_HOME=/root/android/android-ndk-r20
 export OPENSSL_DIR=/root/openssl/openssl-1.1.1d
 
 # Find the toolchain for your build machine
-toolchains_path=/root/android/android-ndk-r20/toolchains/llvm/prebuilt/linux-x86_64
+toolchains_path=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64
 
 # Configure the OpenSSL environment, refer to NOTES.ANDROID in OPENSSL_DIR
 # Set compiler clang, instead of gcc by default
@@ -23,16 +23,20 @@ ANDROID_API=21
 # Set the target architecture
 # Can be android-arm, android-arm64, android-x86, android-x86 etc
 
+outdir=armeabi-v7a
 architecture=android-arm
 
 # Create the make file
 cd ${OPENSSL_DIR}
-#./Configure ${architecture} -D__ANDROID_API__=$ANDROID_API -I
 
-./config no-ssl2 no-ssl3 no-comp no-hw no-engine \
---openssldir=$(pwd)/../out/$ANDROID_API \
---prefix=$(pwd)/../out/$ANDROID_API
+make clean
 
+./Configure ${architecture} -D__ANDROID_API__=$ANDROID_API
+
+
+#./config no-ssl2 no-ssl3 no-comp no-hw no-engine \
+#--openssldir=$(pwd)/../out/$ANDROID_API \
+#--prefix=$(pwd)/../out/$ANDROID_API
 
 
 # Build
@@ -40,7 +44,7 @@ make
 
 # Copy the outputs
 OUTPUT_INCLUDE=$SCRIPTPATH/output/include
-OUTPUT_LIB=$SCRIPTPATH/output/lib/${architecture}
+OUTPUT_LIB=$SCRIPTPATH/output/lib/${outdir}
 mkdir -p $OUTPUT_INCLUDE
 mkdir -p $OUTPUT_LIB
 cp -RL include/openssl $OUTPUT_INCLUDE

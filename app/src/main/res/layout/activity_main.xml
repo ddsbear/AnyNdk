@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="openssl"
-        android:text="GmSSL(openssl支持国密)测试"
+        android:text="openSSL测试"
         android:textAllCaps="false" />
 
     <Button
