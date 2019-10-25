@@ -12,10 +12,9 @@
 #include "macro.h"
 
 
-int cipher::aes_encrypt(char *in, unsigned char *key, int keyLen, unsigned char *out) {
+int cipher::aes_encrypt(unsigned char *in, unsigned char *key, int keyLen, unsigned char *out) {
     AES_KEY aes;
     if (!in || !key || !out) return 0;
-    int len = strlen(in), en_len = 0;
     // 检查key长度
     if (keyLen != 16 && keyLen != 24 && keyLen != 32) {
         LOGE("aes_encrypt key length is invalid");
@@ -26,41 +25,27 @@ int cipher::aes_encrypt(char *in, unsigned char *key, int keyLen, unsigned char 
         LOGE("aes_encrypt AES_set_encrypt_key error");
         return -2;
     }
-    // 开始加密
-    while (en_len < len) {
-        AES_encrypt((unsigned char *) in, out, &aes);
-        in += AES_BLOCK_SIZE;
-        out += AES_BLOCK_SIZE;
-        en_len += AES_BLOCK_SIZE;
-    }
+
+    AES_ecb_encrypt(in, out, &aes, AES_ENCRYPT);
     return 1;
 }
 
-int cipher::aes_decrypt(char *in, unsigned char *key, int keyLen, char *out) {
+int cipher::aes_decrypt(unsigned char *in, unsigned char *key, int keyLen, unsigned char *out) {
     AES_KEY aes;
     if (!in || !key || !out) return 0;
-    int len = strlen(in), en_len = 0;
 
-    for (size_t i = len - 1; !in[i]; i--) {
-        len = i;
-    }
     // 检查key长度
     if (keyLen != 16 && keyLen != 24 && keyLen != 32) {
         LOGE("aes_decrypt key length is invalid");
         return -1;
     }
     // 设置key
-    if (AES_set_decrypt_key(key, keyLen << 3, &aes) < 0) { // keyLen*8
+    if (AES_set_decrypt_key(key, keyLen << 3, &aes) != 0) { // keyLen*8
         LOGE("aes_decrypt AES_set_decrypt_key error");
         return -2;
     }
-    //开始解密
-    while (en_len < len) {
-        AES_decrypt((unsigned char *) in, (unsigned char *) out, &aes);
-        in += AES_BLOCK_SIZE;
-        out += AES_BLOCK_SIZE;
-        en_len += AES_BLOCK_SIZE;
-    }
+
+    AES_ecb_encrypt(in, out, &aes, AES_DECRYPT);
     return 1;
 }
 

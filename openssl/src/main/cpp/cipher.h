@@ -9,9 +9,9 @@ class cipher {
 private:
 
 public:
-    static int aes_encrypt(char *in, unsigned char *key, int ketLen, unsigned char *out);
+    static int aes_encrypt(unsigned char *in, unsigned char *key, int ketLen, unsigned char *out);
 
-    static int aes_decrypt(char *in, unsigned char *key, int keyLen, char *out);
+    static int aes_decrypt(unsigned char *in, unsigned char *key, int keyLen, unsigned char *out);
 
     static char *Base64encode(const void *pin, int inlen, char *pout, char bNewLine = 1);
 
