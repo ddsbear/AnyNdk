@@ -14,7 +14,7 @@ This project includes the compilation and use of various native layer libraries,
 
 让你的开发更方便  NDK学习路线
 
-**csdn链接**：https://blog.csdn.net/u011077027/column/info/40423
+**csdn链接**：https://blog.csdn.net/u011077027/article/category/9043004
 
 **简书链接**：https://www.jianshu.com/c/61e5d23ffa6e
 
