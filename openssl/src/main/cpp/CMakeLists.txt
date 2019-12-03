@@ -7,7 +7,8 @@ add_library(
         native-cipher
         SHARED
         native-lib.cpp
-        cipher.cpp)
+        cipher.cpp
+        utils.cpp)
 
 add_library(crypto STATIC IMPORTED)
 set_target_properties(crypto

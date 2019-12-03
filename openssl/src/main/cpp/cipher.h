@@ -16,6 +16,12 @@ public:
     static char *Base64encode(const void *pin, int inlen, char *pout, char bNewLine = 1);
 
     static void Base64decode(const char *pin, void *pout, int *poutLen, char bNewLine = 1);
+
+    static void rsa_genkey();
+
+    static void rsa_encrypt();
+
+    static void rsa_decrypt();
 };
 
 

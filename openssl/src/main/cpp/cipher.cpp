@@ -12,7 +12,7 @@
 #include "macro.h"
 
 
-int cipher::aes_encrypt(unsigned char *in, unsigned char *key, int keyLen, unsigned char *out) {
+int cipher::aes_encrypt(unsigned char *in,unsigned char *key, int keyLen,unsigned char *out) {
     AES_KEY aes;
     if (!in || !key || !out) return 0;
     // 检查key长度
@@ -25,7 +25,6 @@ int cipher::aes_encrypt(unsigned char *in, unsigned char *key, int keyLen, unsig
         LOGE("aes_encrypt AES_set_encrypt_key error");
         return -2;
     }
-
     AES_ecb_encrypt(in, out, &aes, AES_ENCRYPT);
     return 1;
 }
