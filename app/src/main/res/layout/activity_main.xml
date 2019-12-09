@@ -8,21 +8,6 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onC1base"
-        android:text="c/c++c测试"
-        android:textAllCaps="false" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onC2base"
-        android:text="c/c++工具"
-        android:textAllCaps="false" />
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="openssl"
