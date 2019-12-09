@@ -6,7 +6,7 @@ package com.dds.c2_base;
  */
 public class Utils {
     static {
-        System.loadLibrary("native-test");
+        System.loadLibrary("native-log");
     }
 
     public enum LogLevel {

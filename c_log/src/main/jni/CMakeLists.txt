@@ -6,13 +6,13 @@ include_directories(include)
 include_directories(utils)
 
 add_library(
-        native-test
+        native-log
         SHARED
-        native-test.cpp
+        native-log.cpp
         utils/util.cpp
         log.cpp)
 
 
 target_link_libraries(
-        native-test
+        native-log
         log)

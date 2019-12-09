@@ -33,8 +33,8 @@ dependencies {
     // implementation project(path: ':c2_base')
 //    implementation project(path: ':opengl')
 //    implementation project(path: ':gmssl')
-    implementation project(path: ':parson')
-    implementation project(path: ':openssl')
+    implementation project(path: ':c_parson')
+    implementation project(path: ':c_openssl')
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
