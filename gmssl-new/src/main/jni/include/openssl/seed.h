@@ -39,7 +39,7 @@
 
 # ifndef OPENSSL_NO_SEED
 # include <openssl/e_os2.h>
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 
 #ifdef  __cplusplus
 extern "C" {

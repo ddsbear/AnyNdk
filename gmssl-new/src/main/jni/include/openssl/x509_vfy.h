@@ -20,7 +20,7 @@
 # include <openssl/opensslconf.h>
 # include <openssl/lhash.h>
 # include <openssl/bio.h>
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 # include <openssl/symhacks.h>
 
 #ifdef  __cplusplus

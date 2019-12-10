@@ -17,7 +17,7 @@
 # include <string.h>
 # include <openssl/safestack.h>
 # include <openssl/bn.h>
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 
 # ifdef  __cplusplus
 extern "C" {

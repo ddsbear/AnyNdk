@@ -30,7 +30,7 @@
 # endif
 # include <openssl/opensslconf.h>
 # include <openssl/ossl_typ.h>
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 
 #ifdef  __cplusplus
 extern "C" {

@@ -15,7 +15,7 @@
 # ifndef OPENSSL_NO_UI
 
 #  if OPENSSL_API_COMPAT < 0x10100000L
-#   include <openssl/aisicrypto.h>
+#   include <openssl/crypto.h>
 #  endif
 #  include <openssl/safestack.h>
 #  include <openssl/ossl_typ.h>

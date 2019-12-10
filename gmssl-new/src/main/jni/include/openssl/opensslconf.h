@@ -22,23 +22,20 @@ extern "C" {
  * OpenSSL was configured with the following options:
  */
 
-#ifndef OPENSSL_NO_CPK
-# define OPENSSL_NO_CPK
-#endif
 #ifndef OPENSSL_NO_MD2
 # define OPENSSL_NO_MD2
 #endif
 #ifndef OPENSSL_NO_RC5
 # define OPENSSL_NO_RC5
 #endif
-#ifndef OPENSSL_NO_SPECK
-# define OPENSSL_NO_SPECK
-#endif
 #ifndef OPENSSL_THREADS
 # define OPENSSL_THREADS
 #endif
 #ifndef OPENSSL_NO_ASAN
 # define OPENSSL_NO_ASAN
+#endif
+#ifndef OPENSSL_NO_ASM
+# define OPENSSL_NO_ASM
 #endif
 #ifndef OPENSSL_NO_CRYPTO_MDEBUG
 # define OPENSSL_NO_CRYPTO_MDEBUG
@@ -156,7 +153,7 @@ extern "C" {
 # define DEPRECATEDIN_0_9_8(f)
 #endif
 
-#define OPENSSL_CPUID_OBJ
+
 
 /* Generate 80386 code? */
 #undef I386_ONLY
@@ -177,7 +174,7 @@ extern "C" {
 # define THIRTY_TWO_BIT
 #endif
 
-#define RC4_INT unsigned char
+#define RC4_INT unsigned int
 
 #ifdef  __cplusplus
 }

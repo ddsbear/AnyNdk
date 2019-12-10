@@ -17,7 +17,7 @@
 # endif
 # include <stdarg.h>
 
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 
 # ifndef OPENSSL_NO_SCTP
 #  ifndef OPENSSL_SYS_VMS

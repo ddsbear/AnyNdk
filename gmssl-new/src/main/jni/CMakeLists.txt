@@ -1,20 +1,13 @@
-cmake_minimum_required(VERSION 3.4.1)
 
+cmake_minimum_required(VERSION 3.4.1)
 
 include_directories(include)
 
 add_library(
-        mobishield
+        native-gmssl
         SHARED
-        mobishield.cpp
-        cipher.cpp
+        native-gmssl.cpp
 )
-
-## CMake Error: fix shared library text segment is not shareable
-#set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wall -v -Wl,--no-warn-shared-textrel")
-
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -ffunction-sections -fdata-sections -fvisibility=hidden")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--gc-sections")
 
 add_library(crypto STATIC IMPORTED)
 set_target_properties(crypto
@@ -30,8 +23,9 @@ set_target_properties(ssl
 find_library(
         log-lib
         log)
+
 target_link_libraries(
-        mobishield
+        native-gmssl
         crypto
         ssl
         ${log-lib})

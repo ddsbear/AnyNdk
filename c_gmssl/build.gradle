@@ -12,6 +12,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_TOOLCHAIN=clang"  //使用的编译器clang/gcc
+                cppFlags ""
+                abiFilters  "x86","armeabi-v7a"// ,"arm64-v8a"//, "x86_64"
+            }
+        }
     }
 
     buildTypes {
@@ -20,7 +27,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    externalNativeBuild {
+        cmake {
+            path "src/main/jni/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
 }
 
 dependencies {

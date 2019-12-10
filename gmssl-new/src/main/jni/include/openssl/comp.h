@@ -13,7 +13,7 @@
 # include <openssl/opensslconf.h>
 
 # ifndef OPENSSL_NO_COMP
-# include <openssl/aisicrypto.h>
+# include <openssl/crypto.h>
 # ifdef  __cplusplus
 extern "C" {
 # endif
